@@ -1,12 +1,14 @@
 const Redis = require('ioredis');
 const logger = require('./logger');
 
-const redisConfig = {
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: process.env.REDIS_PORT || 6379,
-    maxRetriesPerRequest: null,
-    enableOfflineQueue: false // Prevent commands from hanging if Redis is down
-};
+const redisConfig = process.env.REDIS_URL 
+    ? process.env.REDIS_URL 
+    : {
+        host: process.env.REDIS_HOST || '127.0.0.1',
+        port: process.env.REDIS_PORT || 6379,
+        maxRetriesPerRequest: null,
+        enableOfflineQueue: false
+    };
 
 const redis = new Redis(redisConfig);
 
